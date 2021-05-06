@@ -1,23 +1,33 @@
 package com.hz.config;
 
-@Config
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 public class RabbitmqConfig {
     @Bean
     public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost",5672);
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("127.0.0.1",5672);
         //我这里直接在构造方法传入了
         //        connectionFactory.setHost();
         //        connectionFactory.setPort();
         connectionFactory.setUsername("admin");
         connectionFactory.setPassword("admin");
-        connectionFactory.setVirtualHost("testhost");
+        connectionFactory.setVirtualHost("/");
         //是否开启消息确认机制
-        //connectionFactory.setPublisherConfirms(true);
+//        connectionFactory.setPublisherConfirms(true);
         return connectionFactory;
     }
 
     @Bean
-    public DirectExchange  defaultExchange() {
+    public DirectExchange defaultExchange() {
         return new DirectExchange("directExchange");
     }
 
@@ -36,7 +46,7 @@ public class RabbitmqConfig {
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         //注意  这个ConnectionFactory 是使用javaconfig方式配置连接的时候才需要传入的  如果是yml配置的连接的话是不需要的
-        RabbitTemplate template = new RabbitTemplate(connectionFactory)；
+        RabbitTemplate template = new RabbitTemplate(connectionFactory);
         return template;
     }
 }
