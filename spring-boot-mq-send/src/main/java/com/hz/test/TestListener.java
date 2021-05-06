@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 public class TestListener {
     @RabbitListener(queues = "testQueue")
     public void get(String message) throws Exception{
+        System.out.println("TestListener:");
         System.out.println(message);
     }
 }
