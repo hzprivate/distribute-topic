@@ -53,7 +53,7 @@ public class RabbitmqConfig {
     @Bean
     public Binding binding() {
         //绑定一个队列  to: 绑定到哪个交换机上面 with：绑定的路由建（routingKey）
-        return BindingBuilder.bind(queue()).to(topicExchange()).with("*.key");
+        return BindingBuilder.bind(queue()).to(defaultExchange()).with("direct.key");
 //        return BindingBuilder.bind(queue()).to(fanoutExchange());
 
     }

@@ -10,6 +10,6 @@ public class AppStartApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext run = SpringApplication.run(AppStartApplication.class, args);
         TestSend bean = run.getBean(TestSend.class);
-        bean.testSend();
+        bean.testSendBatch();
     }
 }
